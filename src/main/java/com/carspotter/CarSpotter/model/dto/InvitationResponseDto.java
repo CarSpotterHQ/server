@@ -41,9 +41,9 @@ public class InvitationResponseDto {
 
     private static List<TaskResponseDto> getTaskResponseDto(List<InvitationTask> invitationTasks) {
         ArrayList<TaskResponseDto> taskResponseDtos = new ArrayList<>();
-//        for (InvitationTask invitationTask : invitationTasks) {
-//            taskResponseDtos.add(TaskResponseDto.from(invitationTask));
-//        }
+        for (InvitationTask invitationTask : invitationTasks) {
+            taskResponseDtos.add(TaskResponseDto.from(invitationTask));
+        }
         return taskResponseDtos;
     }
 }
