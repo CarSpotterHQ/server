@@ -10,16 +10,15 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class InvitationTask {
 
-    @EmbeddedId
-    private InvitationTaskId id; // 복합 키
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id; // 단일키로 변경
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @MapsId("invitationId")
     @JoinColumn(name = "invitation_id")
     private Invitation invitation;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @MapsId("taskId")
     @JoinColumn(name = "task_id")
     private Task task;
 
@@ -28,7 +27,6 @@ public class InvitationTask {
     private TaskOrder taskOrder; // 순서
 
     public InvitationTask(Invitation invitation, Task task, TaskOrder taskOrder) {
-        this.id = new InvitationTaskId(invitation.getId(), task.getId());
         this.invitation = invitation;
         this.task = task;
         this.taskOrder = taskOrder;

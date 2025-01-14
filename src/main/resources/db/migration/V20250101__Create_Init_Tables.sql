@@ -20,10 +20,10 @@ CREATE TABLE tp_task
 
 CREATE TABLE tp_invitation_task
 (
+    id                BIGSERIAL PRIMARY KEY,
     invitation_id BIGINT NOT NULL, -- 초대장 ID
     task_id       BIGINT NOT NULL, -- Task ID
-    task_order    BIGINT NOT NULL, -- 순서
-    PRIMARY KEY (invitation_id, task_id)
+    task_order    BIGINT NOT NULL -- 순서
 );
 
 CREATE TABLE tp_major_category
@@ -47,3 +47,6 @@ CREATE TABLE tp_penalty
     description TEXT,                               -- 벌칙 상세 정보
     is_secret   BOOLEAN      NOT NULL DEFAULT FALSE --개별 사용자가 생성한 벌칙인지
 );
+
+CREATE INDEX idx_invitation_id ON tp_invitation_task (invitation_id);
+CREATE INDEX idx_task_id ON tp_invitation_task (task_id);
