@@ -5,12 +5,12 @@ import lombok.Getter;
 
 @Getter
 @Entity
-@Table(name = "penalty")
+@Table(name = "tp_penalty")
 public class Penalty {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id; // 벌칙 ID
+    private Long id; // 벌칙 ID
 
     @Column(nullable = false)
     private String name; // 벌칙 이름
