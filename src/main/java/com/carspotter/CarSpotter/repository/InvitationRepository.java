@@ -6,4 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface InvitationRepository extends JpaRepository<Invitation, Integer> {
+    Invitation findByUuid(String uuid);
 }

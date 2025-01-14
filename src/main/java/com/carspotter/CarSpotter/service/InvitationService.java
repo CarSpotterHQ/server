@@ -50,4 +50,8 @@ public class InvitationService {
     public void deleteInvitation(Integer id) {
         invitationRepository.deleteById(id);
     }
+
+    public Invitation findByUUID(String uuid) {
+        return invitationRepository.findByUuid(uuid);
+    }
 }

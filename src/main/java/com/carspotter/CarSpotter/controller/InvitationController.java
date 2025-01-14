@@ -6,10 +6,7 @@ import com.carspotter.CarSpotter.model.dto.InvitationResponseDto;
 import com.carspotter.CarSpotter.service.InvitationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/v1/invitation")
@@ -25,5 +22,16 @@ public class InvitationController {
         return ResponseEntity.ok(InvitationResponseDto.from(invitation));
     }
 
+    @GetMapping("/{uuid}")
+    public ResponseEntity<Object> findInvitationByUUID(@PathVariable("uuid") String uuid) {
+//        if (!uuid.matches("^[a-fA-F0-9\\-]{36}$")) {
+//            return ResponseEntity.badRequest().body("Invalid UUID format");
+//        }
+        Invitation invitation = invitationService.findByUUID(uuid);
+        if (invitation == null) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(InvitationResponseDto.from(invitation));
+    }
 
 }
