@@ -1,33 +1,51 @@
 package com.carspotter.CarSpotter.model;
 
+import com.carspotter.CarSpotter.model.dto.TaskRequestDto;
 import jakarta.persistence.*;
+import lombok.Getter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "task")
+@Table(name = "tp_task")
+@Getter
 public class Task {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id; // 할일 ID
+    private Long id; // 할일 ID
 
     @Column(nullable = false)
     private String name; // 할일 이름
 
+    @Column(nullable = false)
+    private String nickname; //닉네임
+
     @OneToMany(mappedBy = "task", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<InvitationTask> invitationTasks;
+    private List<InvitationTask> invitationTasks = new ArrayList<>();
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "major_category_id", nullable = false)
-    private MajorCategory majorCategoryId; // 대분류 ID
+    @JoinColumn(name = "major_category_id")
+    private MajorCategory majorCategory; // 대분류 ID
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "minor_category_id", nullable = false)
-    private MinorCategory minorCategoryId; // 소분류 ID
+    @JoinColumn(name = "minor_category_id")
+    private MinorCategory minorCategory; // 소분류 ID
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "penalty_id", nullable = false)
-    private Penalty penaltyId; // 벌칙 ID
+    @JoinColumn(name = "penalty_id")
+    private Penalty penalty; // 벌칙 ID
 
+    public static Task from(TaskRequestDto taskRequestDto) {
+        Task task = new Task();
+        //생성데이터 채우기
+        task.name = taskRequestDto.getName();
+        task.nickname = taskRequestDto.getNickname();
+        return task;
+    }
+
+    public void addTask(InvitationTask e) {
+        this.invitationTasks.add(e);
+    }
 }

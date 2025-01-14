@@ -5,12 +5,12 @@ import lombok.Getter;
 
 @Getter
 @Entity
-@Table(name = "minor_category")
+@Table(name = "tp_minor_category")
 public class MinorCategory {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id; // 소분류 ID
+    private Long id; // 소분류 ID
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "major_category_id", nullable = false)

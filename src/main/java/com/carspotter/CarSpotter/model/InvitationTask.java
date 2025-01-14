@@ -2,10 +2,12 @@ package com.carspotter.CarSpotter.model;
 
 import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "invitation_task")
+@Table(name = "tp_invitation_task")
 @Getter
+@NoArgsConstructor
 public class InvitationTask {
 
     @EmbeddedId
@@ -22,6 +24,13 @@ public class InvitationTask {
     private Task task;
 
     @Column(name = "task_order", nullable = false)
-    private Integer taskOrder; // 순서
+    @Enumerated(EnumType.ORDINAL)
+    private TaskOrder taskOrder; // 순서
 
+    public InvitationTask(Invitation invitation, Task task, TaskOrder taskOrder) {
+        this.id = new InvitationTaskId(invitation.getId(), task.getId());
+        this.invitation = invitation;
+        this.task = task;
+        this.taskOrder = taskOrder;
+    }
 }
