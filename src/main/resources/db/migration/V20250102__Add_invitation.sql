@@ -1,1 +1,0 @@
-ALTER TABLE tp_invitation ADD COLUMN uuid VARCHAR(256);
