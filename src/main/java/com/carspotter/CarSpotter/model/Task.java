@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Builder
 @AllArgsConstructor
@@ -52,6 +53,8 @@ public class Task {
     }
 
     public void addTask(InvitationTask e) {
-        this.invitationTasks.add(e);
+        Optional.ofNullable(this.invitationTasks).orElseGet(()
+                -> this.invitationTasks = new ArrayList<>()).add(e);
     }
+
 }
