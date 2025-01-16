@@ -16,5 +16,6 @@ public class TaskRequestDto {
 
     private String name;
     private String nickname;
+    private String penaltyName;
 
 }

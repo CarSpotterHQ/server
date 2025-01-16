@@ -16,7 +16,12 @@ public enum ErrorCode {
     INVALID_PASSWORD(HttpStatus.BAD_REQUEST, "400", "비밀번호가 옳지 않습니다."),
     INVALID_REQUEST(HttpStatus.BAD_REQUEST,"400","올바르지 않은 요청"),
     NO_LOGIN(HttpStatus.UNAUTHORIZED, "401", "로그인이 필요합니다"),
-    NO_TOKEN(HttpStatus.UNAUTHORIZED, "401", "Refresh Token 이 유효하지 않습니다.");
+    NO_TOKEN(HttpStatus.UNAUTHORIZED, "401", "Refresh Token 이 유효하지 않습니다."),
+
+
+
+    NO_CATEGORY(HttpStatus.NOT_FOUND, "404", "정해진 카테고리의 챌린지가 존재하지 않습니다."),
+    NO_PENALTY(HttpStatus.BAD_REQUEST, "404", "벌칙이 정해지지 않았습니다.");
 
 
     private HttpStatus httpStatus;

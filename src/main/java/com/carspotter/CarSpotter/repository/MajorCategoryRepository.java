@@ -7,6 +7,6 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface MajorCategoryRepository extends JpaRepository<MajorCategory, Integer> {
+public interface MajorCategoryRepository extends JpaRepository<MajorCategory, Long> {
     List<MajorCategory> findByNameContaining(String name);
 }

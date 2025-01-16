@@ -7,6 +7,6 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface PenaltyRepository extends JpaRepository<Penalty, Integer> {
+public interface PenaltyRepository extends JpaRepository<Penalty, Long> {
     List<Penalty> findByIsSecretTrue();
 }

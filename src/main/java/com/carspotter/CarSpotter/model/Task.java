@@ -2,11 +2,17 @@ package com.carspotter.CarSpotter.model;
 
 import com.carspotter.CarSpotter.model.dto.TaskRequestDto;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
 @Table(name = "tp_task")
 @Getter
