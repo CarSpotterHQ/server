@@ -18,7 +18,7 @@ public class PenaltyService {
         return penaltyRepository.findAll();
     }
 
-    public Penalty getPenaltyById(Long id) {
+    public Penalty getPenaltyById(Integer id) {
         return penaltyRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Penalty not found with id: " + id));
     }
@@ -27,7 +27,7 @@ public class PenaltyService {
         return penaltyRepository.save(penalty);
     }
 
-    public void deletePenalty(Long id) {
+    public void deletePenalty(Integer id) {
         penaltyRepository.deleteById(id);
     }
 }

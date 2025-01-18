@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.DynamicUpdate;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,6 +18,7 @@ import java.util.Optional;
 @Entity
 @Table(name = "tp_task")
 @Getter
+@DynamicUpdate
 public class Task {
 
     @Id
@@ -28,6 +30,9 @@ public class Task {
 
     @Column(nullable = false)
     private String nickname; //닉네임
+
+    @Column(name = "certification_photo")
+    private String certificationPhoto; // 인증사진
 
     @OneToMany(mappedBy = "task", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<InvitationTask> invitationTasks = new ArrayList<>();
@@ -55,6 +60,11 @@ public class Task {
     public void addTask(InvitationTask e) {
         Optional.ofNullable(this.invitationTasks).orElseGet(()
                 -> this.invitationTasks = new ArrayList<>()).add(e);
+    }
+
+    public Task updateTask(String certificationPhoto){
+        this.certificationPhoto = certificationPhoto;
+        return this;
     }
 
 }

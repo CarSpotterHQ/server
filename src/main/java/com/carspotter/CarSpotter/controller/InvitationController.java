@@ -3,15 +3,21 @@ package com.carspotter.CarSpotter.controller;
 import com.carspotter.CarSpotter.exception.CustomException;
 import com.carspotter.CarSpotter.exception.error.ErrorCode;
 import com.carspotter.CarSpotter.model.Invitation;
+import com.carspotter.CarSpotter.model.Task;
 import com.carspotter.CarSpotter.model.dto.InvitationRequestDto;
 import com.carspotter.CarSpotter.model.dto.InvitationResponseDto;
+import com.carspotter.CarSpotter.model.dto.TaskResponseDto;
 import com.carspotter.CarSpotter.response.ErrorResponse;
 import com.carspotter.CarSpotter.response.SuccessResponse;
 import com.carspotter.CarSpotter.service.InvitationService;
+import com.carspotter.CarSpotter.service.TaskService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/v1/invitation")
@@ -44,6 +50,22 @@ public class InvitationController {
             return ResponseEntity.notFound().build();
         }
         return ResponseEntity.ok(InvitationResponseDto.from(invitation));
+    }
+
+    // 보상 카드 제공
+    @PostMapping("/{uuid}/task/{order}")
+    public ResponseEntity<?> createRewardCard(@PathVariable("uuid") String uuid, @PathVariable("order") Integer order,
+                                              @RequestPart(value = "certificationPhoto", required = false) final MultipartFile multipartFile){
+        try{
+            Invitation invitation = invitationService.saveRewardCard(uuid, order, Optional.ofNullable(multipartFile));
+            return new ResponseEntity<>(new SuccessResponse(InvitationResponseDto.from(invitation)), HttpStatus.OK);
+        }catch (CustomException e){
+            e.printStackTrace();
+            return new ResponseEntity<>(new ErrorResponse(e.getErrorCode().getHttpStatus(),e.getMessage()), e.getErrorCode().getHttpStatus());
+        } catch (Exception e){
+            e.printStackTrace();
+            return new ResponseEntity<>(new ErrorResponse(ErrorCode.INTERNAL_SERVER_ERROR), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
 }
