@@ -18,7 +18,7 @@ public class MinorCategoryService {
         return minorCategoryRepository.findAll();
     }
 
-    public MinorCategory getMinorCategoryById(Long id) {
+    public MinorCategory getMinorCategoryById(Integer id) {
         return minorCategoryRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("MinorCategory not found with id: " + id));
     }
@@ -27,7 +27,7 @@ public class MinorCategoryService {
         return minorCategoryRepository.save(minorCategory);
     }
 
-    public void deleteMinorCategory(Long id) {
+    public void deleteMinorCategory(Integer id) {
         minorCategoryRepository.deleteById(id);
     }
 

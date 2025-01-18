@@ -10,9 +10,9 @@ import lombok.NonNull;
 @NoArgsConstructor
 public class TaskRequestDto {
 
-    private Long majorCategoryId;
-    private Long minorCategoryId;
-    private Long penaltyId;
+    private Integer majorCategoryId;
+    private Integer minorCategoryId;
+    private Integer penaltyId;
 
     private String name;
     private String nickname;

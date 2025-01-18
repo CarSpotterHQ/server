@@ -22,7 +22,8 @@ public class TaskResponseDto {
 
     public static TaskResponseDto from(InvitationTask invitationTask) {
         Task task = invitationTask.getTask();
-        return new TaskResponseDtoBuilder()
+        return TaskResponseDto
+                .builder()
                 .id(task.getId())
                 .name(task.getName())
                 .taskOrder(invitationTask.getTaskOrder())

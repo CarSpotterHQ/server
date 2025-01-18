@@ -7,6 +7,6 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface MinorCategoryRepository extends JpaRepository<MinorCategory, Long> {
+public interface MinorCategoryRepository extends JpaRepository<MinorCategory, Integer> {
     List<MinorCategory> findByMajorCategoryId(Integer majorCategoryId);
 }
