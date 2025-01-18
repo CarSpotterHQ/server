@@ -4,6 +4,12 @@ plugins {
 	id 'io.spring.dependency-management' version '1.1.6'
 }
 
+jar {
+	archiveBaseName.set("backend") // 생성될 JAR 파일 이름 설정
+	archiveVersion.set("")         // 버전 정보를 포함하지 않음 (선택 사항)
+	archiveClassifier.set("")      // 분류를 비우도록 설정 (선택 사항)
+}
+
 group = 'com.carspotter'
 version = '0.0.1-SNAPSHOT'
 
