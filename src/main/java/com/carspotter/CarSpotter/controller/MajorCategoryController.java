@@ -3,9 +3,13 @@ package com.carspotter.CarSpotter.controller;
 import com.carspotter.CarSpotter.exception.CustomException;
 import com.carspotter.CarSpotter.exception.error.ErrorCode;
 import com.carspotter.CarSpotter.model.MajorCategory;
+import com.carspotter.CarSpotter.model.MinorCategory;
+import com.carspotter.CarSpotter.model.dto.MajorCategoryDetailResponseDto;
 import com.carspotter.CarSpotter.model.dto.MajorCategoryResponseDto;
+import com.carspotter.CarSpotter.model.dto.MinorCategoryResponseDto;
 import com.carspotter.CarSpotter.response.ErrorResponse;
 import com.carspotter.CarSpotter.service.MajorCategoryService;
+import com.carspotter.CarSpotter.service.MinorCategoryService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,6 +26,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class MajorCategoryController {
     private final MajorCategoryService majorCategoryService;
+    private final MinorCategoryService minorCategoryService;
 
     @GetMapping("/all")
     public ResponseEntity<Object> findAllMajorCategory() {
@@ -41,7 +46,9 @@ public class MajorCategoryController {
     public ResponseEntity<Object> findMajorCategoryById(@PathVariable("id") Integer id) {
         try {
             MajorCategory majorCategory = majorCategoryService.getMajorCategoryById(id);
-            return ResponseEntity.ok(MajorCategoryResponseDto.from(majorCategory));
+            List<MinorCategory> allMinorCategoriesByMajorId = minorCategoryService.getAllMinorCategoriesByMajorId(id);
+
+            return ResponseEntity.ok(MajorCategoryDetailResponseDto.from(majorCategory,allMinorCategoriesByMajorId));
         } catch (CustomException e) {
             e.printStackTrace();
             return new ResponseEntity<>(new ErrorResponse(e.getErrorCode().getHttpStatus(), e.getMessage()), e.getErrorCode().getHttpStatus());

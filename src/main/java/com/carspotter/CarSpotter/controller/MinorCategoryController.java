@@ -14,28 +14,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
 @RestController
 @RequestMapping("/api/v1/minor-category")
 @RequiredArgsConstructor
 public class MinorCategoryController {
     private final MinorCategoryService minorCategoryService;
-
-    @GetMapping("/{major-category-id}")
-    public ResponseEntity<Object> findByMajorCategoryId(@PathVariable("major-category-id") Integer id) {
-        try {
-            List<MinorCategory> minorCategories = minorCategoryService.getAllMinorCategoriesByMajorId(id);
-            return ResponseEntity.ok(minorCategories.stream().map(MinorCategoryResponseDto::from).collect(Collectors.toList()));
-        } catch (CustomException e) {
-            e.printStackTrace();
-            return new ResponseEntity<>(new ErrorResponse(e.getErrorCode().getHttpStatus(), e.getMessage()), e.getErrorCode().getHttpStatus());
-        } catch (Exception e) {
-            e.printStackTrace();
-            return new ResponseEntity<>(new ErrorResponse(ErrorCode.INTERNAL_SERVER_ERROR), HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
 
     @GetMapping("/{id}")
     public ResponseEntity<Object> findById(@PathVariable("id") Integer id) {
