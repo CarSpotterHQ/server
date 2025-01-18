@@ -8,8 +8,10 @@ import com.carspotter.CarSpotter.model.dto.InvitationResponseDto;
 import com.carspotter.CarSpotter.response.ErrorResponse;
 import com.carspotter.CarSpotter.response.SuccessResponse;
 import com.carspotter.CarSpotter.service.InvitationService;
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -37,7 +39,9 @@ public class InvitationController {
         }
     }
 
+    @Operation(summary = "초대장 데이터 확인")
     @GetMapping("/{uuid}")
+
     public ResponseEntity<Object> findInvitationByUUID(@PathVariable("uuid") String uuid) {
         try {
 //        if (!uuid.matches("^[a-fA-F0-9\\-]{36}$")) {
@@ -58,9 +62,10 @@ public class InvitationController {
     }
 
     // 보상 카드 제공
-    @PostMapping("/{uuid}/task/{order}")
+    @Operation(summary = "생성 및 수정, 사진 입력으로 성공 여부 확인")
+    @PostMapping(value = "/{uuid}/task/{order}", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE, MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<?> createRewardCard(@PathVariable("uuid") String uuid, @PathVariable("order") Integer order,
-                                              @RequestPart(value = "certificationPhoto", required = false) final MultipartFile multipartFile) {
+                                              @RequestPart(value = "certificationPhoto", required = false) MultipartFile multipartFile) {
         try {
             Invitation invitation = invitationService.saveRewardCard(uuid, order, Optional.ofNullable(multipartFile));
             return new ResponseEntity<>(new SuccessResponse(InvitationResponseDto.from(invitation)), HttpStatus.OK);

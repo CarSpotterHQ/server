@@ -61,6 +61,7 @@ public class InvitationService {
                 .orElseThrow(() -> new CustomException(ErrorCode.NO_CATEGORY));
     }
 
+    @Transactional
     public Invitation saveRewardCard(String uuid, Integer order, Optional<MultipartFile> multipartFile) throws IOException {
 
         Invitation invitation = findByUUID(uuid);
