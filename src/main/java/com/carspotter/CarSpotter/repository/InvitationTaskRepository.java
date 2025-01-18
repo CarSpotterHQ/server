@@ -7,6 +7,6 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface InvitationTaskRepository extends JpaRepository<InvitationTask, Integer> {
-    List<InvitationTask> findByInvitationId(Integer invitationId);
+public interface InvitationTaskRepository extends JpaRepository<InvitationTask, Long> {
+    List<InvitationTask> findByInvitationId(Long invitationId);
 }

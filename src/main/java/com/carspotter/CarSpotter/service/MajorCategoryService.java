@@ -18,7 +18,7 @@ public class MajorCategoryService {
         return majorCategoryRepository.findAll();
     }
 
-    public MajorCategory getMajorCategoryById(Integer id) {
+    public MajorCategory getMajorCategoryById(Long id) {
         return majorCategoryRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("MajorCategory not found with id: " + id));
     }
@@ -27,7 +27,7 @@ public class MajorCategoryService {
         return majorCategoryRepository.save(majorCategory);
     }
 
-    public void deleteMajorCategory(Integer id) {
+    public void deleteMajorCategory(Long id) {
         majorCategoryRepository.deleteById(id);
     }
 }

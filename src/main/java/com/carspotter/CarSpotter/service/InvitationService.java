@@ -27,7 +27,7 @@ public class InvitationService {
         return invitationRepository.findAll();
     }
 
-    public Invitation getInvitationById(Integer id) {
+    public Invitation getInvitationById(Long id) {
         return invitationRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Invitation not found with id: " + id));
     }
@@ -47,7 +47,7 @@ public class InvitationService {
         task.addTask(e);
     }
 
-    public void deleteInvitation(Integer id) {
+    public void deleteInvitation(Long id) {
         invitationRepository.deleteById(id);
     }
 
