@@ -30,4 +30,8 @@ public class MinorCategoryService {
     public void deleteMinorCategory(Long id) {
         minorCategoryRepository.deleteById(id);
     }
+
+    public List<MinorCategory> getAllMinorCategoriesByMajorId(Integer id) {
+        return minorCategoryRepository.findByMajorCategoryId(id);
+    }
 }
