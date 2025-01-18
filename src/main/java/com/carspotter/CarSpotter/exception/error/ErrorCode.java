@@ -21,7 +21,9 @@ public enum ErrorCode {
 
 
     NO_CATEGORY(HttpStatus.NOT_FOUND, "404", "정해진 카테고리의 챌린지가 존재하지 않습니다."),
-    NO_PENALTY(HttpStatus.BAD_REQUEST, "404", "벌칙이 정해지지 않았습니다.");
+    NO_PENALTY(HttpStatus.BAD_REQUEST, "404", "벌칙이 정해지지 않았습니다."),
+    NO_TASK(HttpStatus.NOT_FOUND, "404", "목표가 존재하지 않습니다."),
+    NO_INVITATION(HttpStatus.NOT_FOUND, "404", "초대장이 존재하지 않습니다.");
 
 
     private HttpStatus httpStatus;

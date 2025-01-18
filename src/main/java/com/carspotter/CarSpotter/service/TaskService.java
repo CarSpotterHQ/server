@@ -15,7 +15,9 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
@@ -30,14 +32,13 @@ public class TaskService {
     private final MinorCategoryRepository minorCategoryRepository;
     private final PenaltyRepository penaltyRepository;
 
-
     public List<Task> getAllTasks() {
         return taskRepository.findAll();
     }
 
     public Task getTaskById(Long id) {
         return taskRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Task not found with id: " + id));
+                .orElseThrow(() -> new CustomException(ErrorCode.NO_TASK));
     }
 
     @Transactional

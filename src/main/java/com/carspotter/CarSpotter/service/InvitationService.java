@@ -1,5 +1,7 @@
 package com.carspotter.CarSpotter.service;
 
+import com.carspotter.CarSpotter.exception.CustomException;
+import com.carspotter.CarSpotter.exception.error.ErrorCode;
 import com.carspotter.CarSpotter.model.Invitation;
 import com.carspotter.CarSpotter.model.InvitationTask;
 import com.carspotter.CarSpotter.model.Task;
@@ -10,8 +12,11 @@ import com.carspotter.CarSpotter.repository.InvitationTaskRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
+import java.util.Optional;
 
 @RequiredArgsConstructor
 @Service
@@ -21,7 +26,7 @@ public class InvitationService {
     private final InvitationRepository invitationRepository;
     private final InvitationTaskRepository invitationTaskRepository;
     private final TaskService taskService;
-
+    private final S3Uploader s3Uploader;
 
     public List<Invitation> getInvitations() {
         return invitationRepository.findAll();
@@ -52,6 +57,31 @@ public class InvitationService {
     }
 
     public Invitation findByUUID(String uuid) {
-        return invitationRepository.findByUuid(uuid);
+        return invitationRepository.findByUuid(uuid)
+                .orElseThrow(() -> new CustomException(ErrorCode.NO_CATEGORY));
+    }
+
+    public Invitation saveRewardCard(String uuid, Integer order, Optional<MultipartFile> multipartFile) throws IOException {
+
+        Invitation invitation = findByUUID(uuid);
+        TaskOrder taskOrder = TaskOrder.values()[order];
+
+        InvitationTask invitationTask = invitation.getInvitationTasks()
+                .stream()
+                .filter(task -> task.getTaskOrder() == taskOrder)
+                .findFirst()
+                .orElseThrow(() -> new CustomException(ErrorCode.NO_TASK));
+
+        Task task = invitationTask.getTask();
+
+        if (multipartFile.isPresent() && !multipartFile.get().isEmpty()) {
+            String uploadImg = s3Uploader.upload(multipartFile.get());
+            task.updateTask(uploadImg);
+            return invitationRepository.save(invitation);
+
+            //TODO : 목표 달성 이후에 Invitation 완료 처리
+        } else {
+            throw new IllegalArgumentException("MultipartFile is empty or not present.");
+        }
     }
 }
