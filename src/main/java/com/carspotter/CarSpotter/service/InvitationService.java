@@ -7,6 +7,7 @@ import com.carspotter.CarSpotter.model.InvitationTask;
 import com.carspotter.CarSpotter.model.Task;
 import com.carspotter.CarSpotter.model.TaskOrder;
 import com.carspotter.CarSpotter.model.dto.InvitationRequestDto;
+import com.carspotter.CarSpotter.model.dto.TaskRequestDto;
 import com.carspotter.CarSpotter.repository.InvitationRepository;
 import com.carspotter.CarSpotter.repository.InvitationTaskRepository;
 import lombok.RequiredArgsConstructor;
@@ -30,11 +31,6 @@ public class InvitationService {
 
     public List<Invitation> getInvitations() {
         return invitationRepository.findAll();
-    }
-
-    public Invitation getInvitationById(Long id) {
-        return invitationRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Invitation not found with id: " + id));
     }
 
     @Transactional
@@ -84,5 +80,13 @@ public class InvitationService {
         } else {
             throw new IllegalArgumentException("MultipartFile is empty or not present.");
         }
+    }
+
+    @Transactional
+    public Invitation saveInvitation(String uuid, Integer order, TaskRequestDto taskRequestDto) {
+        Invitation invitation = findByUUID(uuid);
+        Task task = taskService.saveTask(taskRequestDto);
+        setTaskOrder(invitation, task, TaskOrder.values()[order]);
+        return invitation;
     }
 }

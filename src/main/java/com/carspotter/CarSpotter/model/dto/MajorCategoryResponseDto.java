@@ -5,8 +5,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.List;
-
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -15,6 +13,7 @@ public class MajorCategoryResponseDto {
     private String name; // 대분류 이름
 
     public static MajorCategoryResponseDto from(MajorCategory majorCategory) {
+        if (majorCategory == null) return null;
         MajorCategoryResponseDto majorCategoryResponseDto = new MajorCategoryResponseDto();
         majorCategoryResponseDto.id = majorCategory.getId();
         majorCategoryResponseDto.name = majorCategory.getName();

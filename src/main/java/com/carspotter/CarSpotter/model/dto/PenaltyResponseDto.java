@@ -2,7 +2,6 @@ package com.carspotter.CarSpotter.model.dto;
 
 import com.carspotter.CarSpotter.model.Penalty;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -17,6 +16,7 @@ public class PenaltyResponseDto {
     private Boolean isSecret = false; // 벌칙 공개 여부 (기본값: FALSE)
 
     public static PenaltyResponseDto from(Penalty penalty) {
+        if (penalty == null) return null;
         PenaltyResponseDto penaltyResponseDto = new PenaltyResponseDto();
         penaltyResponseDto.description = penalty.getDescription();
         penaltyResponseDto.id = penalty.getId();
