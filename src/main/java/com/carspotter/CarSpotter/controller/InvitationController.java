@@ -31,7 +31,6 @@ public class InvitationController {
     @PostMapping
     public ResponseEntity<?> createInvitation(@RequestBody InvitationRequestDto request) {
         try {
-            //TODO : request에 대한 validation 검증
             //Penalty, Major, Minor가 있는경우 ID기반으로 모두 존재하는 객체인지 시간 확인
             Invitation invitation = invitationService.saveInvitation(request);
             return new ResponseEntity<>(new SuccessResponse(InvitationResponseDto.from(invitation)), HttpStatus.OK);
@@ -63,12 +62,8 @@ public class InvitationController {
 
     @Operation(summary = "초대장 데이터 확인")
     @GetMapping("/{uuid}")
-
     public ResponseEntity<Object> findInvitationByUUID(@PathVariable("uuid") String uuid) {
         try {
-//        if (!uuid.matches("^[a-fA-F0-9\\-]{36}$")) {
-//            return ResponseEntity.badRequest().body("Invalid UUID format");
-//        }
             Invitation invitation = invitationService.findByUUID(uuid);
             if (invitation == null) {
                 return ResponseEntity.notFound().build();

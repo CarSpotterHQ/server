@@ -25,16 +25,8 @@ public class PenaltyController {
 
     @GetMapping("/all")
     public ResponseEntity<Object> findAllPenalty() {
-        try {
-            List<Penalty> allPenalties = penaltyService.getAllPenalties();
-            return ResponseEntity.ok(allPenalties.stream().map(PenaltyResponseDto::from).collect(Collectors.toList()));
-        } catch (CustomException e) {
-            e.printStackTrace();
-            return new ResponseEntity<>(new ErrorResponse(e.getErrorCode().getHttpStatus(), e.getMessage()), e.getErrorCode().getHttpStatus());
-        } catch (Exception e) {
-            e.printStackTrace();
-            return new ResponseEntity<>(new ErrorResponse(ErrorCode.INTERNAL_SERVER_ERROR), HttpStatus.INTERNAL_SERVER_ERROR);
-        }
+        List<Penalty> allPenalties = penaltyService.getAllPenalties();
+        return ResponseEntity.ok(allPenalties.stream().map(PenaltyResponseDto::from).collect(Collectors.toList()));
     }
 
     @GetMapping("/{id}")

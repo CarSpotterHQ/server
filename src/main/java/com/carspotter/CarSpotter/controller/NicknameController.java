@@ -20,8 +20,7 @@ public class NicknameController {
     @GetMapping
     public ResponseEntity<Object> getRandomNickname() {
         try {
-            String nickname = nicknameService.getRandomNickname();
-            return ResponseEntity.ok(nickname);
+            return ResponseEntity.ok(nicknameService.getRandomNickname());
         } catch (CustomException e) {
             e.printStackTrace();
             return new ResponseEntity<>(new ErrorResponse(e.getErrorCode().getHttpStatus(), e.getMessage()), e.getErrorCode().getHttpStatus());
