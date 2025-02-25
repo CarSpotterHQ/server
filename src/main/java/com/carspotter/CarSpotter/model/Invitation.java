@@ -18,7 +18,7 @@ public class Invitation extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id; // 초대장 ID
 
-    @Column(nullable = false)
+    @Column
     private String title; // 초대장 제목
 
     @Column(columnDefinition = "TEXT")

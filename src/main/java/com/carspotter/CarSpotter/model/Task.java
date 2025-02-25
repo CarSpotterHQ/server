@@ -25,10 +25,10 @@ public class Task {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id; // 할일 ID
 
-    @Column(nullable = false)
+    @Column
     private String name; // 할일 이름
 
-    @Column(nullable = false)
+    @Column
     private String nickname; //닉네임
 
     @Column(name = "certification_photo")

@@ -31,7 +31,7 @@ public class InvitationController {
     @PostMapping
     public ResponseEntity<?> createInvitation(@RequestBody InvitationRequestDto request) {
         try {
-            //Penalty, Major, Minor가 있는경우 ID기반으로 모두 존재하는 객체인지 시간 확인
+            //title을 넣어주면 ID값을 비워져 있을수 있다.
             Invitation invitation = invitationService.saveInvitation(request);
             return new ResponseEntity<>(new SuccessResponse(InvitationResponseDto.from(invitation)), HttpStatus.OK);
         } catch (CustomException e) {
