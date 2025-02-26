@@ -28,18 +28,17 @@ public class InvitationResponseDto {
 
     private LocalDateTime endTime; // 종료 시간
 
-    private InvitationStatus isFinished = InvitationStatus.DURING;
+    private InvitationStatus status = InvitationStatus.DURING;
 
     public static InvitationResponseDto from(Invitation invitation) {
         InvitationResponseDto invitationResponseDto = new InvitationResponseDto();
-        invitationResponseDto.isFinished = isFinished(invitation);
+        invitationResponseDto.status = invitation.getStatus();
         invitationResponseDto.description = invitation.getDescription();
         invitationResponseDto.endTime = invitation.getEndTime();
         invitationResponseDto.startTime = invitation.getStartTime();
         invitationResponseDto.id = invitation.getId();
         invitationResponseDto.title = invitation.getTitle();
         invitationResponseDto.uuid = invitation.getUuid();
-        //TODO : task 정보 채우기
         invitationResponseDto.invitationTasks = getTaskResponseDto(invitation.getInvitationTasks());
         return invitationResponseDto;
     }

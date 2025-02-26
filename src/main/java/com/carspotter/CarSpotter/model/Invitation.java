@@ -36,6 +36,9 @@ public class Invitation extends BaseEntity {
     @Column(name = "uuid", nullable = false)
     private String uuid;
 
+    @Enumerated(EnumType.STRING)
+    private InvitationStatus status = InvitationStatus.DURING;
+
     public static Invitation from(InvitationRequestDto requestDto) {
         Invitation invitation = new Invitation();
         invitation.title = requestDto.getTitle();
@@ -48,5 +51,9 @@ public class Invitation extends BaseEntity {
 
     public void addTask(InvitationTask e) { //order enum 관리?
         invitationTasks.add(e);
+    }
+
+    public void updateStatus(InvitationStatus invitationStatus) {
+        this.status = invitationStatus;
     }
 }
