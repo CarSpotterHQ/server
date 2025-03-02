@@ -75,13 +75,11 @@ public class InvitationService {
         if (multipartFile.isPresent() && !multipartFile.get().isEmpty()) {
             String uploadImg = s3Uploader.upload(multipartFile.get());
             task.updateTask(uploadImg);
-            //목표 달성 이후에 Invitation 완료 처리
-            invitation.updateStatus(InvitationStatus.FINISHED);
-            return invitationRepository.save(invitation);
-
-        } else {
-            throw new IllegalArgumentException("MultipartFile is empty or not present.");
         }
+
+        //사진이 없어도 목표 달성 이후에 Invitation 완료 처리
+        invitation.updateStatus(InvitationStatus.FINISHED);
+        return invitationRepository.save(invitation);
     }
 
     @Transactional

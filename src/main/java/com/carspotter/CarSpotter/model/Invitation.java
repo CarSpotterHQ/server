@@ -44,7 +44,11 @@ public class Invitation extends BaseEntity {
         invitation.title = requestDto.getTitle();
         invitation.description = requestDto.getDescription();
         invitation.startTime = LocalDateTime.now();
-        invitation.endTime = (requestDto.getEndTime() == null) ? LocalDateTime.now().plusDays(1) : requestDto.getEndTime();
+//        invitation.endTime = (requestDto.getEndTime() == null) ? LocalDateTime.now().plusDays(1) : requestDto.getEndTime();
+        invitation.endTime =
+                (requestDto.getDurationMinutes() == null)
+                        ? LocalDateTime.now().plusDays(1)
+                        : LocalDateTime.now().plusMinutes(requestDto.getDurationMinutes());
         invitation.uuid = String.valueOf(UUID.randomUUID());
         return invitation;
     }
