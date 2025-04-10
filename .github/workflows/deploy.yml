@@ -9,6 +9,7 @@ jobs:
   deploy:
     name: Deploy Backend
     runs-on: ubuntu-latest
+    environment: production
 
     steps:
       # 1. 코드 체크아웃
